@@ -1,4 +1,5 @@
 var express = require('express');
+var fortune = require('./lib/fortune')
 
 var app = express();
 
@@ -30,8 +31,10 @@ app.get('/about', function(req, res) {
 
   // res.render('about');
 
-  var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render('about', {fortune: randomFortune});
+  // var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+  // res.render('about', {fortune: randomFortune});
+
+  res.render('about', {fortune: fortune.getFortune()});
 });
 
 // 定制404页面(app.use是Express添加中间件的一种方法)
@@ -63,10 +66,10 @@ app.use(function(err, req, res, next) {
 })
 
 // 幸运饼干数组
-var fortunes = [
-  'Conquer your fears or they will conquer you.',
-  'Rivers nees springs.',
-  'Do nor fear what you don\'t know.',
-  'You will have a pleasant surprise.',
-  'Whenever possible, keep it simple.'
-]
+// var fortunes = [
+//   'Conquer your fears or they will conquer you.',
+//   'Rivers nees springs.',
+//   'Do nor fear what you don\'t know.',
+//   'You will have a pleasant surprise.',
+//   'Whenever possible, keep it simple.'
+// ]
