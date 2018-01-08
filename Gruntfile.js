@@ -10,9 +10,9 @@ module.exports = function(grunt) {
 
     // 配置插件
     grunt.initConfig({
-        // cafemocha: {
-        //     all: {src: 'qa/tests-*.js', options: {ui: 'tdd'}}
-        // },
+        cafemocha: {
+            all: {src: 'qa/tests-*.js', options: {ui: 'tdd'}}
+        },
         jshint: {
             app: ['meadowlark.js', 'public/js/**/*.js', 'lib/**/*.js'], // 通配符/**/的含义是“子目录中的所以文件”
             qa: ['Gruntfile.js', 'public/qa/**/*.js', 'qa/**/*.js']
@@ -23,5 +23,5 @@ module.exports = function(grunt) {
     });
 
     // 注册任务
-    grunt.registerTask('default', ['jshint', 'exec']);
+    grunt.registerTask('default', ['cafemocha', 'jshint', 'exec']);
 };
