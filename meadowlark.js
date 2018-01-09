@@ -60,6 +60,17 @@ app.get('/tours/request-group-rate', function(req, res) {
   res.render('tours/request-group-rate');
 });
 
+// 查看请求时浏览器发送的信息
+app.get('/headers', function(req, res) {
+  res.set('Content-type', 'text/plain');
+  var s = '';
+  // 请求报头对象的信息
+  for(var name in req.headers) {
+    s += name + ': ' + req.headers[name] + '\n';
+  }
+  res.send(s);
+});
+
 // 定制404页面(app.use是Express添加中间件的一种方法)
 // app.use(function(req, res, next) {
 //   res.type('text/plain');
