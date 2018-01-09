@@ -4,7 +4,7 @@ var fortune = require('./lib/fortune');
 var app = express();
 
 // 设置handlebar视图引擎
-var handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
+var handlebars = require('express3-handlebars').create({defaultLayout: 'main', extname: '.hbs'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
