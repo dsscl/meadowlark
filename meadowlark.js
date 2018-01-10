@@ -1,6 +1,8 @@
 var express = require('express');
 var fortune = require('./lib/fortune');
 var weather = require('./lib/weather');
+var formidable = require('formidable');  // 复合表单处理，一种流行健壮的选择（平行选择还有：Busboy）
+var jqupload =  require('jquery-file-upload-middleware');
 
 var app = express();
 
@@ -46,6 +48,18 @@ app.use(function(req, res, next) {
   }
   res.locals.partials.weather = weather.getWeatherData();
   next();
+});
+
+app.use('/upload', function(req, res, next) {
+  var now = Date.now();
+  jqupload.fileHandler({
+    uploadDir: function() {
+      return __dirname + '/public/uploads/' + now;
+    },
+    uploadUrl: function() {
+      return '/uploads/' + now;
+    }
+  })(req, res, next);
 });
 
 // 添加路由（添加路由和添加中间件的顺序至关重要）
@@ -136,6 +150,32 @@ app.post('/process',function(req, res) {
 });
 app.get('/thank-you', function(req, res) {
   res.send('Thank you!');
+});
+app.get('/error', function(req, res) {
+  res.send('Error!');
+});
+
+// 文件上传（复合表单）相关路由
+app.get('/contest/vacation-photo', function(req, res) {
+  var now = new Date();
+  res.render('contest/vacation-photo', {
+    year: now.getFullYear(),
+    month: now.getMonth()
+  });
+});
+app.post('/contest/vacation-photo/:year/:month', function(req, res) {
+  var form = new formidable.IncomingForm();
+  // formidable有一个方便的回调方法，能够提供包含字段和文件信息的对象
+  form.parse(req, function(err, fields, files) {
+    if(err) {
+      return res.redirect(303, '/error');
+    }
+    console.log('received fields');
+    console.log(fields);
+    console.log('received files:');
+    console.log(files);
+    res.redirect(303, '/thank-you');
+  });
 });
 
 // 定制404页面(app.use是Express添加中间件的一种方法)
