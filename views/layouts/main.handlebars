@@ -2,6 +2,14 @@
 <html>
   <head>
     <title>Meadowlark Travel</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    {{#if flash}}
+      <div class="alert alert-dismissible alert-{{flash.type}}" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>{{flash.intro}}</strong>
+        {{{flash.message}}}
+      </div>
+    {{/if}}
     {{!-- 段落 --}}
     {{{_sections.head}}}
     {{!-- {{#if showTests}}
@@ -13,6 +21,7 @@
     {{!-- <header><img src="/img/logo.png" alt="Meadowlark Travel Logo" width="40"></header> --}}
     {{{body}}}
     <script src="//code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
     {{{_sections.jquery}}}
     {{!-- {{#if showTests}}
       <div id="mocha"></div>
